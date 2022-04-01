@@ -8,14 +8,14 @@ const logger = require('../utils/logger')
 const processRaw = (args) => {
     const { files: pattern, output } = args
 
-    const files = processInputFilePattern(pattern)
+    const fileList = processInputFilePattern(pattern)
 
-    if (!files || !processOutputDir(output)) {
+    if (!fileList || !processOutputDir(output)) {
         return
     }
 
     const qst = new QSTNorm()
-    qst.processFilesPath(files, output)
+    qst.processFilesPath(fileList, output)
 
     logger(chalk.blue('Completed!'))
 }

@@ -12,16 +12,19 @@ const processInputFilePattern = (pattern) => {
     const files = getFilesPathUsingPattern(pattern)
 
     if (files.length === 0) {
-        logger(chalk.bgRed.white('Error: No file found'))
+        logger(chalk.bgRed.white('Error: No input file found'))
         logger(
-            'Please check you files pattern. Given pattern:',
-            chalk.blue(pattern)
+            chalk.red(
+                'Please check you files pattern.',
+                'If there are any spaces in the pattern',
+                'then consider wrapping it with quotes.'
+            )
         )
 
         return false
     }
 
-    logger(chalk.green(`Total ${files.length} file(s) found.`))
+    logger(chalk.green(`${files.length} file(s) found.`))
 
     return files
 }
