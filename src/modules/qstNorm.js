@@ -221,10 +221,21 @@ class QSTNorm {
             records,
             addRemainingColumns
         )
+
+        // sanitizing row data
+        const data = rows.map((cols) =>
+            cols.map((d) => {
+                if (typeof d === 'string') {
+                    return d.replaceAll(',', '-')
+                }
+                return d
+            })
+        )
+
         const csvOutput = Papa.unparse(
             {
                 fields,
-                data: rows,
+                data,
             },
             {
                 delimiter: records.meta.delimiter,
