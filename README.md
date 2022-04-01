@@ -27,3 +27,15 @@ To install all dependencies:
 ```bash
 npm i
 ```
+
+To install cli:
+
+```bash
+npm i -g
+```
+
+To run cli:
+
+```bash
+sa help
+```
