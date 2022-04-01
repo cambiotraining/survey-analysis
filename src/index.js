@@ -3,6 +3,7 @@
 const { Command } = require('commander')
 
 const cat = require('./commands/cat')
+const processRaw = require('./commands/process-raw')
 
 const program = new Command()
 
@@ -19,15 +20,25 @@ Make sure all csv files have same set of headers otherwise the output
 of this function will now be as expected.
 `
     )
-    .option('-f, --files <path>', 'Path of csv files. Default is current path')
+    .option('-f, --files <path>', 'Path of csv files')
     .option(
-        '-h, --headers-row <headerRows>',
+        '-h, --headers-row <header rows>',
         'Total number of headers row. Default is 1'
     )
     .option(
-        '-o, --output <outputDir>',
+        '-o, --output <output file name>',
         'Output file name. Default is output.csv'
     )
     .action(cat)
+
+program
+    .command('process')
+    .description('To process raw survey data')
+    .option('-f, --files <path>', 'Path of csv files')
+    .option(
+        '-o, --output <output directory>',
+        'Output file name. Default is output.csv'
+    )
+    .action(processRaw)
 
 program.parse()
