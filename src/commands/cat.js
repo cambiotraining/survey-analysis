@@ -29,7 +29,7 @@ const cat = (args = {}) => {
 
     fs.writeFileSync(output, csv)
 
-    logger(chalk.bold.white('Rows:', df.shape[0], 'Columns:', df.shape(1)))
+    logger(chalk.bold.white('Rows:', df.shape[0], 'Columns:', df.shape[1]))
     logger(chalk.blue('Completed!'))
 }
 
