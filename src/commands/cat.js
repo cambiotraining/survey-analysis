@@ -1,20 +1,11 @@
-const Papa = require('papaparse')
 const fs = require('fs-extra')
 const dfd = require('danfojs-node')
 const path = require('path')
+const chalk = require('chalk')
 
 const processInputFilePattern = require('../common/process-input-file-pattern')
 const logger = require('../utils/logger')
-const chalk = require('chalk')
-
-const buildDataFrameFromCSVFilePath = (filePath) => {
-    const rawData = fs.readFileSync(filePath, { encoding: 'utf8' })
-
-    const parseData = Papa.parse(rawData, { header: true })
-    const parseDataList = parseData.data.map((data) => Object.values(data))
-
-    return new dfd.DataFrame(parseDataList, { columns: parseData.meta.fields })
-}
+const { catUsingFileList } = require('../utils/concatnate')
 
 const cat = (args = {}) => {
     const { files: pattern, output = 'output.csv' } = args
@@ -32,15 +23,9 @@ const cat = (args = {}) => {
         return
     }
 
-    const dfList = []
+    const df = catUsingFileList(fileList)
 
-    for (const file of fileList) {
-        dfList.push(buildDataFrameFromCSVFilePath(file))
-    }
-
-    const combinedDataFrame = dfd.concat({ dfList, axis: 0 })
-
-    const csv = dfd.toCSV(combinedDataFrame)
+    const csv = dfd.toCSV(df)
 
     fs.writeFileSync(output, csv)
 
