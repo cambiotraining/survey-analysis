@@ -4,6 +4,7 @@ const { Command } = require('commander')
 
 const cat = require('./commands/cat')
 const processRaw = require('./commands/process-raw')
+const view = require('./commands/view')
 
 const program = new Command()
 
@@ -36,5 +37,21 @@ program
         'Output file name. Default is output.csv'
     )
     .action(processRaw)
+
+program
+    .command('view')
+    .description('To view csv file.')
+    .option('-f, --files <path>', 'Path of csv file')
+    .option('-t, --tail <number>', 'Print the last n row(s) of the csv file')
+    .option('-h, --head <number>', 'Print the first n row(s) of the csv file')
+    .option(
+        '-r, --rows <rows...>',
+        'Print the specific rows. Usage: sa view -r 1 2 3 10'
+    )
+    .option(
+        '-c, --columns <columns...>',
+        'Print the specific columns. Usage: sa view -c 1 2 3 10'
+    )
+    .action(view)
 
 program.parse()
