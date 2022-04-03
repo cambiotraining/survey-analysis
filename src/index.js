@@ -22,7 +22,7 @@ Make sure all csv files have same set of headers otherwise the output
 of this function will now be as expected.
 `
     )
-    .option('-f, --files <path>', 'Path of csv files')
+    .option('-f, --files <pattern>', 'Path of csv files')
     .option(
         '-o, --output <output file name>',
         'Output file name. Default is output.csv'
@@ -32,7 +32,7 @@ of this function will now be as expected.
 program
     .command('process')
     .description('To process raw survey data')
-    .option('-f, --files <path>', 'Path of csv files')
+    .option('-f, --files <pattern>', 'Path of csv files')
     .option(
         '-o, --output <output directory>',
         'Output file name. Default is output.csv'
