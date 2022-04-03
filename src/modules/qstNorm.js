@@ -232,9 +232,16 @@ class QSTNorm {
             })
         )
 
+        const _fields = fields.map((data) => {
+            if (typeof data === 'string') {
+                return data.replaceAll(',', '-')
+            }
+            return data
+        })
+
         const csvOutput = Papa.unparse(
             {
-                fields,
+                fields: _fields,
                 data,
             },
             {
