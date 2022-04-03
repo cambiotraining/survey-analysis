@@ -3,6 +3,7 @@
 const { Command } = require('commander')
 
 const cat = require('./commands/cat')
+const extract = require('./commands/extract')
 const processRaw = require('./commands/process-raw')
 const view = require('./commands/view')
 
@@ -41,7 +42,7 @@ program
 program
     .command('view')
     .description('To view csv file.')
-    .option('-f, --files <path>', 'Path of csv file')
+    .option('-f, --file <path>', 'Path of csv file')
     .option('-t, --tail <number>', 'Print the last n row(s) of the csv file')
     .option('-h, --head <number>', 'Print the first n row(s) of the csv file')
     .option(
@@ -53,5 +54,11 @@ program
         'Print the specific columns. Usage: sa view -c 1 2 3 10'
     )
     .action(view)
+
+program
+    .command('extract')
+    .argument('<extract-type>', 'Currently, contact is supported')
+    .option('-f, --files <pattern>', 'Path of csv files')
+    .action(extract)
 
 program.parse()
