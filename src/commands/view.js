@@ -5,7 +5,7 @@ const processInputFilePattern = require('../common/process-input-file-pattern')
 const logger = require('../utils/logger')
 
 const view = async (args = {}) => {
-    const { files: pattern, rows, columns, tail, head } = args
+    const { file: pattern, rows, columns, tail, head } = args
     let _rows
     let _columns
 

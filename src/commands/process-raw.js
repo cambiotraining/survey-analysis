@@ -17,6 +17,7 @@ const processRaw = (args) => {
     const qst = new QSTNorm()
     qst.processFilesPath(fileList, output)
 
+    logger(chalk.bold.white('Process total', fileList.length, 'file(s)'))
     logger(chalk.blue('Completed!'))
 }
 module.exports = processRaw
