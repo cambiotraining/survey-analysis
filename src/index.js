@@ -18,9 +18,7 @@ program
     .command('cat')
     .description(
         `This will help to concatenate multiple csv files into one csv file.
-Make sure all csv files have same set of headers otherwise the output
-of this function will now be as expected.
-`
+Run this after processing raw data.`
     )
     .option('-f, --files <pattern>', 'Path of csv files')
     .option(
@@ -31,7 +29,9 @@ of this function will now be as expected.
 
 program
     .command('process')
-    .description('To process raw survey data')
+    .description(
+        'This is the first thing you should do. It will process raw survey data'
+    )
     .option('-f, --files <pattern>', 'Path of csv files')
     .option(
         '-o, --output <output directory>',
@@ -41,7 +41,9 @@ program
 
 program
     .command('view')
-    .description('To view csv file.')
+    .description(
+        'To view csv file. It will only work after processing raw data.'
+    )
     .option('-f, --file <path>', 'Path of csv file')
     .option('-t, --tail <number>', 'Print the last n row(s) of the csv file')
     .option('-h, --head <number>', 'Print the first n row(s) of the csv file')
@@ -57,6 +59,11 @@ program
 
 program
     .command('extract')
+    .description(
+        `To extract information from processed survey data
+This function is under constructions.    
+`
+    )
     .argument('<extract-type>', 'Currently, contact is supported')
     .option('-f, --files <pattern>', 'Path of csv files')
     .action(extract)
