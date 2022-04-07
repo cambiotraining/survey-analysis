@@ -1,14 +1,14 @@
 const Papa = require('papaparse')
 const fs = require('fs-extra')
 const dfd = require('danfojs-node')
-
 const buildDataFrameFromCSVFilePath = (filePath) => {
     const rawData = fs.readFileSync(filePath, { encoding: 'utf8' })
-
     const parseData = Papa.parse(rawData, { header: true })
     const parseDataList = parseData.data.map((data) => Object.values(data))
 
-    return new dfd.DataFrame(parseDataList, { columns: parseData.meta.fields })
+    return new dfd.DataFrame(parseDataList, {
+        columns: Object.keys(parseData.data[0]),
+    })
 }
 
 const catUsingFileList = (fileList) => {

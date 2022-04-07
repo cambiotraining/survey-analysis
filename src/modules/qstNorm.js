@@ -226,7 +226,7 @@ class QSTNorm {
         const data = rows.map((cols) =>
             cols.map((d) => {
                 if (typeof d === 'string') {
-                    return d.replaceAll(',', '-')
+                    return d.replaceAll(',', '[COMMA]').replace(/\s\s+/g, ' ')
                 }
                 return d
             })
@@ -234,7 +234,7 @@ class QSTNorm {
 
         const _fields = fields.map((data) => {
             if (typeof data === 'string') {
-                return data.replaceAll(',', '-')
+                return data.replaceAll(',', '[COMMA]').replace(/\s\s+/g, ' ')
             }
             return data
         })

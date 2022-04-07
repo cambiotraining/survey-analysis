@@ -19,10 +19,14 @@ const extract = (extractType, other) => {
     }
 
     const df = catUsingFileList(files)
+    const columns = df.columns.filter(
+        (col) => col.search(/Contact info:/i) !== -1
+    )
 
-    df.columns(['Contact info: Name']).print()
-    // df.print()
-    // df.print()
+    console.log('Col', columns)
+    // df.loc({ columns: ['Contact info: Name', 'Contact info: Email'] }).print()
+    // // df.print()
+    // // df.print()
 }
 
 module.exports = extract
