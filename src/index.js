@@ -15,19 +15,6 @@ program
     .version('1.0.0')
 
 program
-    .command('cat')
-    .description(
-        `This will help to concatenate multiple csv files into one csv file.
-Run this after processing raw data.`
-    )
-    .option('-f, --files <pattern>', 'Path of csv files')
-    .option(
-        '-o, --output <output file name>',
-        'Output file name. Default is output.csv'
-    )
-    .action(cat)
-
-program
     .command('process')
     .description(
         'This is the first thing you should do. It will process raw survey data'
@@ -56,6 +43,19 @@ program
         'Print the specific columns. Usage: sa view -c 1 2 3 10'
     )
     .action(view)
+
+program
+    .command('cat')
+    .description(
+        `This will help to concatenate multiple csv files into one csv file.
+Run this after processing raw data.`
+    )
+    .option('-f, --files <pattern>', 'Path of csv files')
+    .option(
+        '-o, --output <output file name>',
+        'Output file name. Default is output.csv'
+    )
+    .action(cat)
 
 program
     .command('extract')
