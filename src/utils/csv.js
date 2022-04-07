@@ -49,8 +49,9 @@ const parseCSV = (filePath) => {
         lastColValue = row[i] !== '' ? row[i] : lastColValue
         const secondRowColValue = headers[1][i]
         flattenHeader[i] =
-            lastColValue +
-            (secondRowColValue !== '' ? ` - ${secondRowColValue}` : '')
+            secondRowColValue === ''
+                ? lastColValue
+                : `[MERGED]: #${lastColValue}#$${secondRowColValue}$`
     }
 
     return {
@@ -70,4 +71,5 @@ const unparseCSV = (header, rows) => {
 module.exports = {
     parseCSV,
     unparseCSV,
+    sanitize,
 }
