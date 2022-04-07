@@ -6,7 +6,7 @@ const processOutputDir = require('../common/process-output-dir')
 const logger = require('../utils/logger')
 const { parseCSV, unparseCSV } = require('../utils/csv')
 const { dropEmptyColumns, dropEmptyRows } = require('../utils/df')
-const { qstNormGetFull } = require('../modules/qstNorm')
+const { QSTNorm } = require('../modules/qstNorm')
 const {
     COMMON_HEADERS,
     IDENTIFIERS_COLUMNS,
@@ -27,15 +27,24 @@ const processRaw = (args) => {
     const { header, rows: _rows } = dropEmptyColumns(flattenHeader, rows)
     const { rows: __rows } = dropEmptyRows(_rows)
 
-    qstNormGetFull({
-        HEADER_SET: [
-            ...COMMON_HEADERS,
-            ...IDENTIFIERS_COLUMNS,
-            ...OTHER_HEADERS,
-        ],
-        header,
-        rows: __rows,
-    })
+    const qstNorm = new QSTNorm(header, __rows)
+
+    qstNorm.prepareColumns()
+    qstNorm.processHeader([
+        ...COMMON_HEADERS,
+        ...IDENTIFIERS_COLUMNS,
+        ...OTHER_HEADERS,
+    ])
+
+    // qstNormGetFull({
+    //     HEADER_SET: [
+    //         ...COMMON_HEADERS,
+    //         ...IDENTIFIERS_COLUMNS,
+    //         ...OTHER_HEADERS,
+    //     ],
+    //     header,
+    //     rows: __rows,
+    // })
     // const csvString = unparseCSV(header, __rows)
 
     // fs.writeFileSync('output.csv', csvString)

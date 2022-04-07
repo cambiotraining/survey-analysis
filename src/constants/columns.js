@@ -109,6 +109,7 @@ const COMMON_HEADERS = [
         name: COLUMNS_ENUM.EMPLOYMENT_COUNTRY,
         additional: {
             lookFor: LOOK_FOR_ENUM.EMPLOYMENT_COUNTRY,
+            type: COLUMN_TYPE.SINGLE,
         },
     },
     {
@@ -232,4 +233,5 @@ module.exports = {
     IDENTIFIERS_COLUMNS,
     COMMON_HEADERS,
     OTHER_HEADERS,
+    COLUMN_TYPE,
 }
