@@ -6,7 +6,10 @@ const logger = require('./logger')
 const sanitize = (text) => {
     if (typeof text !== 'string') return text
 
-    return text.replace(/\s\s+/g, ' ').replace(/[^a-z0-9?/\s]/gi, '')
+    return text
+        .replaceAll('/', '')
+        .replace(/\s\s+/g, ' ')
+        .replace(/[^a-z0-9?/\s]/gi, '')
 }
 
 const parseCSV = (filePath) => {

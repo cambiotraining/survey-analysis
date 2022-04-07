@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const fs = require('fs-extra')
+const path = require('path')
 
 const processInputFilePattern = require('../common/process-input-file-pattern')
 const processOutputDir = require('../common/process-output-dir')
@@ -14,16 +15,8 @@ const {
     ADDITIONAL_HEADERS,
 } = require('../constants/columns')
 
-const processRaw = (args) => {
-    const { files: pattern, output } = args
-
-    const fileList = processInputFilePattern(pattern)
-
-    // if (!fileList || !processOutputDir(output)) {
-    //     return
-    // }
-
-    const { flattenHeader, rows } = parseCSV(fileList[0])
+const processSingleFile = (filePath) => {
+    const { flattenHeader, rows } = parseCSV(filePath)
 
     const { header, rows: _rows } = dropEmptyColumns(flattenHeader, rows)
     const { rows: __rows } = dropEmptyRows(_rows)
@@ -39,9 +32,55 @@ const processRaw = (args) => {
         ...ADDITIONAL_HEADERS,
     ])
 
-    const csvString = unparseCSV(fullHeader, fullRows)
+    const { headers: outHeader, rows: outRows } = qstNorm.processHeader([
+        ...OTHER_HEADERS,
+        ...IDENTIFIERS_COLUMNS,
+        ...ADDITIONAL_HEADERS,
+    ])
 
-    fs.writeFileSync('output.csv', csvString)
+    const { headers: extraHeader, rows: extraRows } = qstNorm.processHeader([
+        ...COMMON_HEADERS,
+        ...IDENTIFIERS_COLUMNS,
+        ...ADDITIONAL_HEADERS,
+    ])
+
+    const full = unparseCSV(fullHeader, fullRows)
+    const out = unparseCSV(outHeader, outRows)
+    const extra = unparseCSV(extraHeader, extraRows)
+
+    return {
+        full,
+        out,
+        extra,
+    }
+}
+
+const processRaw = (args) => {
+    const { files: pattern, output } = args
+
+    const fileList = processInputFilePattern(pattern)
+
+    if (!fileList || !processOutputDir(output)) {
+        return
+    }
+
+    for (const filePath of fileList) {
+        const { full, extra, out } = processSingleFile(filePath)
+        const fileName = path.basename(filePath)
+
+        fs.writeFileSync(
+            `${output}/${fileName.replace(/\.csv$/, '.OUT.csv')}`,
+            out
+        )
+        fs.writeFileSync(
+            `${output}/${fileName.replace(/\.csv$/, '.EXTRA.csv')}`,
+            extra
+        )
+        fs.writeFileSync(
+            `${output}/${fileName.replace(/\.csv$/, '.FULL.csv')}`,
+            full
+        )
+    }
 
     logger(chalk.bold.white('Process total', fileList.length, 'file(s)'))
     logger(chalk.blue('Completed!'))

@@ -22,7 +22,7 @@ const processOtherColData = (data) => {
         }
     }
 
-    return data
+    return _data
 }
 
 const processMergeColData = (data) => {
@@ -167,8 +167,6 @@ class QSTNorm {
                 }
             }
         }
-
-        logger(chalk.green('Columns prepared successfully!'))
     }
 
     processHeader(HEADER_SET) {
