@@ -26,7 +26,39 @@ const processOtherColData = (data) => {
 }
 
 const processMergeColData = (data) => {
-    // if()
+    if (data.length === 1) {
+        return data[0].colData
+    }
+
+    const _data = []
+    for (let i = 0; i < data[0].colData.length; i++) {
+        const col1 = data[0].colData[i]
+        const col2 = data[1].colData[i]
+        if (col1 === '' && col2 === '') {
+            _data.push('')
+        } else if (col2 === '') {
+            _data.push(col1)
+        } else if (col1 === '') {
+            _data.push(col2)
+        } else {
+            _data.push(`${col1} __FREETEXT__ ${col2}`)
+        }
+    }
+
+    return _data
+}
+
+const processMultiColData = (col) => {
+    const prefix = col.name
+    const data = []
+    for (const d of col.data) {
+        data.push({
+            name: `${prefix} ${d.colName}`,
+            data: d.colData,
+        })
+    }
+
+    return data
 }
 
 const processPickedColumns = (columns) => {
@@ -37,23 +69,32 @@ const processPickedColumns = (columns) => {
     for (const col of columns) {
         switch (col.type) {
             case SINGLE:
-                processedCol.push({ ...col, data: col.data[0].colData })
+                processedCol.push({ name: col.name, data: col.data[0].colData })
                 break
+
             case OTHER:
                 processedCol.push({
-                    ...col,
+                    name: col.name,
                     data: processOtherColData(col.data),
                 })
                 break
 
             case MERGE:
+                processedCol.push({
+                    name: col.name,
+                    data: processMergeColData(col.data),
+                })
+                break
+
+            case MULTI:
+                processedCol.push(...processMultiColData(col))
                 break
             default:
                 break
         }
     }
 
-    logger(processedCol)
+    return processedCol
 }
 
 class QSTNorm {
@@ -136,7 +177,8 @@ class QSTNorm {
             }
         }
 
-        processPickedColumns(pickedColumns)
+        const processedCols = processPickedColumns(pickedColumns)
+        return processedCols
     }
 }
 
