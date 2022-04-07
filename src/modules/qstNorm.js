@@ -97,6 +97,28 @@ const processPickedColumns = (columns) => {
     return processedCol
 }
 
+const getHeaderAndRow = (processedCols) => {
+    const headers = []
+    const rows = []
+
+    for (const col of processedCols) {
+        headers.push(col.name)
+    }
+
+    for (let i = 0; i < processedCols[0].data.length; i++) {
+        const row = []
+        for (let j = 0; j < processedCols.length; j++) {
+            row[j] = processedCols[j].data[i]
+        }
+        rows.push(row)
+    }
+
+    return {
+        headers,
+        rows,
+    }
+}
+
 class QSTNorm {
     columns = []
     header = []
@@ -178,7 +200,7 @@ class QSTNorm {
         }
 
         const processedCols = processPickedColumns(pickedColumns)
-        return processedCols
+        return getHeaderAndRow(processedCols)
     }
 }
 

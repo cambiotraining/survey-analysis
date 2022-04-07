@@ -11,6 +11,7 @@ const {
     COMMON_HEADERS,
     IDENTIFIERS_COLUMNS,
     OTHER_HEADERS,
+    ADDITIONAL_HEADERS,
 } = require('../constants/columns')
 
 const processRaw = (args) => {
@@ -30,26 +31,19 @@ const processRaw = (args) => {
     const qstNorm = new QSTNorm(header, __rows)
 
     qstNorm.prepareColumns()
-    qstNorm.processHeader([
+
+    const { headers: fullHeader, rows: fullRows } = qstNorm.processHeader([
         ...COMMON_HEADERS,
         ...IDENTIFIERS_COLUMNS,
         ...OTHER_HEADERS,
+        ...ADDITIONAL_HEADERS,
     ])
 
-    // qstNormGetFull({
-    //     HEADER_SET: [
-    //         ...COMMON_HEADERS,
-    //         ...IDENTIFIERS_COLUMNS,
-    //         ...OTHER_HEADERS,
-    //     ],
-    //     header,
-    //     rows: __rows,
-    // })
-    // const csvString = unparseCSV(header, __rows)
+    const csvString = unparseCSV(fullHeader, fullRows)
 
-    // fs.writeFileSync('output.csv', csvString)
+    fs.writeFileSync('output.csv', csvString)
 
-    // logger(chalk.bold.white('Process total', fileList.length, 'file(s)'))
-    // logger(chalk.blue('Completed!'))
+    logger(chalk.bold.white('Process total', fileList.length, 'file(s)'))
+    logger(chalk.blue('Completed!'))
 }
 module.exports = processRaw

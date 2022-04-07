@@ -7,6 +7,9 @@ const COLUMN_TYPE = {
 
 const COLUMNS_ENUM = {
     ID: 'ID',
+    START_DATE: 'Start Date',
+    END_DATE: 'End Date',
+    IP: 'IP Address',
     COURSE_ADVERTISED: 'Where did you see the course advertised?',
     CAREER_STAGE: 'What is your career stage?',
     EMPLOYMENT_SECTOR: 'What is your employment sector?',
@@ -42,6 +45,9 @@ const MULTI_COLUMNS_STARTS_ENUM = {
 
 const LOOK_FOR_ENUM = {
     ID: 'Respondent ID',
+    START_DATE: 'Start Date',
+    END_DATE: 'End Date',
+    IP: 'IP Address',
     COURSE_ADVERTISED: 'How did you hear about this event?',
     CAREER_STAGE: 'What is your career stage?',
     EMPLOYMENT_SECTOR: 'What is your employment sector?',
@@ -229,9 +235,34 @@ const OTHER_HEADERS = [
     },
 ]
 
+const ADDITIONAL_HEADERS = [
+    {
+        name: COLUMNS_ENUM.START_DATE,
+        additional: {
+            lookFor: LOOK_FOR_ENUM.START_DATE,
+            type: COLUMN_TYPE.SINGLE,
+        },
+    },
+    {
+        name: COLUMNS_ENUM.END_DATE,
+        additional: {
+            lookFor: LOOK_FOR_ENUM.END_DATE,
+            type: COLUMN_TYPE.SINGLE,
+        },
+    },
+    {
+        name: COLUMNS_ENUM.IP,
+        additional: {
+            lookFor: LOOK_FOR_ENUM.IP,
+            type: COLUMN_TYPE.SINGLE,
+        },
+    },
+]
+
 module.exports = {
     IDENTIFIERS_COLUMNS,
     COMMON_HEADERS,
     OTHER_HEADERS,
+    ADDITIONAL_HEADERS,
     COLUMN_TYPE,
 }
