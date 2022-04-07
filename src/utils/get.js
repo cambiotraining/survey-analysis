@@ -8,7 +8,7 @@ const getParsedCSVHeaderValue = (text) => {
     if (typeof text !== 'string') {
         return {
             main: text,
-            col: '',
+            sub: '',
         }
     }
 
@@ -17,13 +17,13 @@ const getParsedCSVHeaderValue = (text) => {
     if (val.length > 1) {
         return {
             main: val[1],
-            col: val[3],
+            sub: val[3],
         }
     }
 
     return {
         main: text,
-        col: '',
+        sub: '',
     }
 }
 
