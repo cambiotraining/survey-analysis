@@ -39,6 +39,11 @@ const extract = (extractType, other) => {
         (col) => col.search(/Contact info:/i) !== -1
     )
 
+    if (columns.length === 0) {
+        logger(chalk.red('Error: No contact column found'))
+        return
+    }
+
     const columnsName = {}
 
     for (const col of columns) {
@@ -49,6 +54,16 @@ const extract = (extractType, other) => {
     contactDf.rename(columnsName, { inplace: true })
 
     contactDf.print()
+
+    logger(
+        chalk.bold.white(
+            'Rows:',
+            contactDf.shape[0],
+            'Columns:',
+            contactDf.shape[1]
+        )
+    )
+    logger(chalk.blue('Completed!'))
 
     if (output) {
         if (processOutputDir(output)) {
