@@ -4,6 +4,21 @@ const dfd = require('danfojs-node')
 const processInputFilePattern = require('../common/process-input-file-pattern')
 const logger = require('../utils/logger')
 
+/**
+ *
+ * @typedef {object} ViewArgs
+ * @property {string} file file path pattern
+ * @property {string[]} rows rows to show
+ * @property {string[]} columns columns to show
+ * @property {string} tail rows to show from last
+ * @property {string} head rows to show from first
+ */
+
+/**
+ * To view single csv file
+ *
+ * @param {ViewArgs} args args
+ */
 const view = async (args = {}) => {
     const { file: pattern, rows, columns, tail, head } = args
     let _rows

@@ -3,6 +3,12 @@ const { getFilesPathUsingPattern } = require('../utils/get')
 
 const logger = require('../utils/logger')
 
+/**
+ * To process input
+ *
+ * @param {string} pattern input file pattern
+ * @returns {boolean | string[]} boolean if no file found else list of input files match the pattern
+ */
 const processInputFilePattern = (pattern) => {
     if (typeof pattern !== 'string' || !pattern) {
         logger(chalk.red('Error: -f, --files is required.'))

@@ -15,6 +15,12 @@ const {
     ADDITIONAL_HEADERS,
 } = require('../constants/columns')
 
+/**
+ * To process single csv file
+ *
+ * @param {string} filePath file path to process
+ * @returns {{full: string, extra: string, out: string}} returns object of csv string
+ */
 const processSingleFile = (filePath) => {
     const { flattenHeader, rows } = parseCSV(filePath)
 
@@ -56,6 +62,18 @@ const processSingleFile = (filePath) => {
     }
 }
 
+/**
+ *
+ * @typedef {object} ProcessArgs
+ * @property {string} files file path pattern
+ * @property {string} output output file name
+ */
+
+/**
+ * To process raw files
+ *
+ * @param {ProcessArgs} args args
+ */
 const processRaw = (args) => {
     const { files: pattern, output } = args
 

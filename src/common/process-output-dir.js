@@ -4,6 +4,12 @@ const path = require('path')
 
 const logger = require('../utils/logger')
 
+/**
+ * To check output directory existence.
+ *
+ * @param {string} output output directory name
+ * @returns {boolean} whether output directory exists.
+ */
 const processOutputDir = (output) => {
     if (typeof output !== 'string' || !output) {
         logger(

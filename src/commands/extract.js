@@ -6,6 +6,20 @@ const logger = require('../utils/logger')
 const { catUsingFileList } = require('../utils/concatnate')
 const processOutputDir = require('../common/process-output-dir')
 
+/**
+ *
+ * @typedef {object} ExtractArgs
+ * @property {string} files file path pattern
+ * @property {string} output output file name
+ */
+
+/**
+ * To extract specific data from processed
+ * csv files.
+ *
+ * @param {'contact'} extractType what to extract
+ * @param {ExtractArgs} other extract arguments
+ */
 const extract = (extractType, other) => {
     if (extractType !== 'contact') {
         logger(chalk.bold.red('Error: This tool can only extract contact.'))

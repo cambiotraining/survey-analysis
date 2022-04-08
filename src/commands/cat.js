@@ -7,6 +7,18 @@ const logger = require('../utils/logger')
 const { catUsingFileList } = require('../utils/concatnate')
 const processOutputDir = require('../common/process-output-dir')
 
+/**
+ *
+ * @typedef {object} CatArgs
+ * @property {string} files file path pattern
+ * @property {string} output output file name
+ */
+
+/**
+ * Command to combine multiple files
+ *
+ * @param {CatArgs} args args
+ */
 const cat = (args = {}) => {
     const { files: pattern, output = 'output.csv' } = args
 

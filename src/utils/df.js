@@ -1,5 +1,10 @@
-const dfd = require('danfojs-node')
-
+/**
+ * Drop empty columns
+ *
+ * @param {string[]} header header row
+ * @param {string[][]} rows rows data
+ * @returns {{header: string[], rows: string[][]}}
+ */
 const dropEmptyColumns = (header, rows) => {
     const emptyCols = {}
 
@@ -26,6 +31,11 @@ const dropEmptyColumns = (header, rows) => {
     }
 }
 
+/**
+ *
+ * @param {string[][]} rows
+ * @returns {{rows: string[][]}}
+ */
 const dropEmptyRows = (rows) => {
     return {
         rows: rows.filter((row) => row.join('') !== ''),

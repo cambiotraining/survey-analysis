@@ -3,6 +3,22 @@ const fs = require('fs-extra')
 const Papa = require('papaparse')
 const logger = require('./logger')
 
+/**
+ *
+ * @typedef {object} ParsedCSV
+ * @property {Array<Array<string>>} headers header rows
+ * @property {Array<string>} flattenHeader header row
+ * @property {Array<Array<string>>} rows rows data
+ */
+
+/**
+ * To sanitize string. It will remove anything
+ * other than alphabets, digit, @abstract, _, ., ?, -
+ * and space.
+ *
+ * @param {string} text string
+ * @returns {string} returns sanitized string
+ */
 const sanitize = (text) => {
     if (typeof text !== 'string') return text
 
@@ -12,6 +28,11 @@ const sanitize = (text) => {
         .replace(/[^a-z0-9@_.-?/\s]/gi, '')
 }
 
+/**
+ *
+ * @param {string} filePath path of csv file
+ * @returns {ParsedCSV} parsed csv
+ */
 const parseCSV = (filePath) => {
     const headerRows = 2
     const rawFileData = fs.readFileSync(filePath, { encoding: 'utf-8' })
@@ -64,6 +85,12 @@ const parseCSV = (filePath) => {
     }
 }
 
+/**
+ *
+ * @param {Array<Array<string>>} header header row
+ * @param {Array<Array<string>>} rows rows data
+ * @returns {string} csv string
+ */
 const unparseCSV = (header, rows) => {
     return Papa.unparse({
         data: rows,

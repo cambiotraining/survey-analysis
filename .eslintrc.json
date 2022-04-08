@@ -2,10 +2,14 @@
     "env": {
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["plugin:jsdoc/recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": [
+        "jsdoc"
+    ],
     "rules": {
+        "jsdoc/check-types": 1
     }
 }
