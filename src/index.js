@@ -66,6 +66,7 @@ This function is under constructions.
     )
     .argument('<extract-type>', 'Currently, contact is supported')
     .option('-f, --files <pattern>', 'Path of csv files')
+    .option('-o, --output <output file name>', 'Output file name.')
     .action(extract)
 
 program.parse()

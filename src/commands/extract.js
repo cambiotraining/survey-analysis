@@ -1,8 +1,10 @@
 const chalk = require('chalk')
+const fs = require('fs-extra')
 
 const processInputFilePattern = require('../common/process-input-file-pattern')
 const logger = require('../utils/logger')
 const { catUsingFileList } = require('../utils/concatnate')
+const processOutputDir = require('../common/process-output-dir')
 
 const extract = (extractType, other) => {
     if (extractType !== 'contact') {
@@ -10,7 +12,7 @@ const extract = (extractType, other) => {
         return
     }
 
-    const { files: pattern } = other
+    const { files: pattern, output } = other
 
     const files = processInputFilePattern(pattern)
 
@@ -23,10 +25,24 @@ const extract = (extractType, other) => {
         (col) => col.search(/Contact info:/i) !== -1
     )
 
-    console.log('Col', columns)
-    // df.loc({ columns: ['Contact info: Name', 'Contact info: Email'] }).print()
-    // // df.print()
-    // // df.print()
+    const columnsName = {}
+
+    for (const col of columns) {
+        columnsName[col] = col.replace(/Contact info:/, '').trim()
+    }
+
+    const contactDf = df.loc({ columns })
+    contactDf.rename(columnsName, { inplace: true })
+
+    contactDf.print()
+
+    if (output) {
+        if (processOutputDir(output)) {
+            const csvString = contactDf.toCSV()
+            fs.writeFileSync(output, csvString)
+            logger(chalk.green('Write successfully to', output))
+        }
+    }
 }
 
 module.exports = extract
