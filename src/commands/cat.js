@@ -1,15 +1,14 @@
 const fs = require('fs-extra')
 const dfd = require('danfojs-node')
-const path = require('path')
 const chalk = require('chalk')
 
 const processInputFilePattern = require('../common/process-input-file-pattern')
 const logger = require('../utils/logger')
 const { catUsingFileList } = require('../utils/concatnate')
+const processOutputDir = require('../common/process-output-dir')
 
 const cat = (args = {}) => {
     const { files: pattern, output = 'output.csv' } = args
-    const directory = path.dirname(output)
 
     const fileList = processInputFilePattern(pattern)
 
@@ -17,9 +16,7 @@ const cat = (args = {}) => {
         return
     }
 
-    if (!fs.existsSync(directory)) {
-        logger(chalk.red("Error: Output directory doesn't exist"))
-        logger(chalk.cyan(`Make sure directory "${directory}" exists.`))
+    if (!processOutputDir(output)) {
         return
     }
 

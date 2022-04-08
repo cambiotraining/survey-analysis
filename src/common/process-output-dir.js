@@ -1,5 +1,6 @@
 const fs = require('fs')
 const chalk = require('chalk')
+const path = require('path')
 
 const logger = require('../utils/logger')
 
@@ -13,7 +14,9 @@ const processOutputDir = (output) => {
         return false
     }
 
-    if (!fs.existsSync(output)) {
+    const dirName = path.dirname(output)
+
+    if (!fs.existsSync(dirName)) {
         logger(chalk.red("Error: Output directory doesn't exist."))
         return false
     }
