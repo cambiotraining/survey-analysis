@@ -42,6 +42,12 @@ const getParsedCSVHeaderValue = (text) => {
     }
 }
 
+const getDateFromString = (str) => {
+    // match pattern like ${date} - ${date} ${month name} ${year}
+    str.match(/\d+\s*-\s*\d+\s*[a-zA-Z]*\s*\d{4}/i)
+    // TODO: add some more pattern.
+}
+
 module.exports = {
     getFilesPathUsingPattern,
     getParsedCSVHeaderValue,

@@ -34,40 +34,50 @@ const extract = (extractType, other) => {
         return
     }
 
-    const df = catUsingFileList(files)
-    const columns = df.columns.filter(
-        (col) => col.search(/Contact info:/i) !== -1
-    )
+    const df = catUsingFileList(files, { addMetaData: true })
 
-    if (columns.length === 0) {
-        logger(chalk.red('Error: No contact column found'))
-        return
-    }
+    df.print()
+    // const columns = df.columns.filter(
+    //     (col) => col.search(/Contact info:/i) !== -1
+    // )
 
-    const columnsName = {}
+    // if (columns.length === 0) {
+    //     logger(chalk.red('Error: No contact column found'))
+    //     return
+    // }
 
-    for (const col of columns) {
-        columnsName[col] = col.replace(/Contact info:/, '').trim()
-    }
+    // const columnsName = {}
 
-    const contactDf = df.loc({ columns })
-    contactDf.rename(columnsName, { inplace: true })
+    // for (const col of columns) {
+    //     columnsName[col] = col.replace(/Contact info:/, '').trim()
+    // }
 
-    contactDf.print()
+    // const contactDf = df.loc({ columns })
+    // contactDf.rename(columnsName, { inplace: true })
 
-    logger(
-        chalk.bold.white(
-            'Rows:',
-            contactDf.shape[0],
-            'Columns:',
-            contactDf.shape[1]
-        )
-    )
-    logger(chalk.blue('Completed!'))
+    // const emptyRows = []
+
+    // for (let i = 0; i < contactDf.values.length; i++) {
+    //     const val = contactDf.values[i]
+    //     if (val.join('') === '') emptyRows.push(i)
+    // }
+
+    // const outputDf = contactDf.drop({ index: emptyRows })
+    // outputDf.print()
+
+    // logger(
+    //     chalk.bold.white(
+    //         'Rows:',
+    //         contactDf.shape[0],
+    //         'Columns:',
+    //         contactDf.shape[1]
+    //     )
+    // )
+    // logger(chalk.blue('Completed!'))
 
     if (output) {
         if (processOutputDir(output)) {
-            const csvString = contactDf.toCSV()
+            const csvString = df.toCSV()
             fs.writeFileSync(output, csvString)
             logger(chalk.green('Write successfully to', output))
         }
