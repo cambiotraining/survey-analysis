@@ -4,6 +4,7 @@ const stringSimilarity = require('string-similarity')
 const { getParsedCSVHeaderValue } = require('../utils/get')
 const logger = require('../utils/logger')
 const { COLUMN_TYPE } = require('../constants/columns')
+const { resolveCommonHeaderNames } = require('../utils/resolve')
 
 /**
  * @typedef {object} HeaderSetColumnType
@@ -82,13 +83,13 @@ const processUnknownCol = (col) => {
         case 2:
             /**
              * It may be merge or other.
-             * We will try to find if second col has any word similar to other.
-             * If it has other then there is high chance that it is OTHER type.
+             * We will try to find if second col has any word similar to 'specify'.
+             * If it has 'specify' then there is high chance that it is OTHER type.
              *
              * If it has something similar to comment the it is MERGE column.
              * else we will process it as multiColData
              */
-            if (col.data[1].colName.search(/other.*specify/i) !== -1) {
+            if (col.data[1].colName.search(/specify/i) !== -1) {
                 return [
                     {
                         name: col.name,
@@ -157,7 +158,7 @@ const getHeaderAndRow = (processedCols) => {
     const rows = []
 
     for (const col of processedCols) {
-        headers.push(col.name)
+        headers.push(resolveCommonHeaderNames(col.name))
     }
 
     for (let i = 0; i < processedCols[0].data.length; i++) {
