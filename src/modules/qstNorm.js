@@ -5,6 +5,14 @@ const { getParsedCSVHeaderValue } = require('../utils/get')
 const logger = require('../utils/logger')
 const { COLUMN_TYPE } = require('../constants/columns')
 
+/**
+ * @typedef {object} HeaderSetColumnType
+ * @property {string} name header name
+ * @property {object} additional additional property
+ * @property {string} additional.lookFor pattern to look for
+ * @property {string} additional.type columns type
+ */
+
 const processOtherColData = (data) => {
     if (data.length === 1) {
         return data[0].colData
@@ -167,8 +175,18 @@ const getHeaderAndRow = (processedCols) => {
 }
 
 class QSTNorm {
+    /**
+     * @type {string[]}
+     */
     columns = []
+    /**
+     * @type {string[]}
+     */
     header = []
+    header = []
+    /**
+     * @type {string[]}[]
+     */
     rows = []
 
     constructor(header, rows) {
@@ -176,6 +194,9 @@ class QSTNorm {
         this.rows = rows
     }
 
+    /**
+     * To prepare columns for processing
+     */
     prepareColumns() {
         this.columns = []
         const header = this.header
@@ -216,6 +237,17 @@ class QSTNorm {
         }
     }
 
+    /**
+     * @typedef {object} ProcessHeaderOptions
+     * @property {boolean} appendUnknownColumns
+     */
+    /**
+     * To process header
+     *
+     * @param {HeaderSetColumnType[]} HEADER_SET header set
+     * @param {ProcessHeaderOptions} option options
+     * @returns
+     */
     processHeader(HEADER_SET, option = {}) {
         const columnKeys = Object.keys(this.columns)
 
