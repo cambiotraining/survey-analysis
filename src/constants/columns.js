@@ -3,6 +3,7 @@ const COLUMN_TYPE = {
     MULTI: 'Multiple Columns',
     OTHER: 'Has Other Column',
     MERGE: 'Merge Other Column',
+    UNKNOWN: 'UNKNOWN',
 }
 
 const COLUMNS_ENUM = {

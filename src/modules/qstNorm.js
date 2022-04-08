@@ -61,8 +61,51 @@ const processMultiColData = (col) => {
     return data
 }
 
+const processUnknownCol = (col) => {
+    switch (col.data.length) {
+        case 1:
+            return [
+                {
+                    name: col.name,
+                    data: col.data[0].colData,
+                },
+            ]
+
+        case 2:
+            /**
+             * It may be merge or other.
+             * We will try to find if second col has any word similar to other.
+             * If it has other then there is high chance that it is OTHER type.
+             *
+             * If it has something similar to comment the it is MERGE column.
+             * else we will process it as multiColData
+             */
+            if (col.data[1].colName.search(/other.*specify/i) !== -1) {
+                return [
+                    {
+                        name: col.name,
+                        data: processOtherColData(col.data),
+                    },
+                ]
+            }
+            if (col.data[1].colName.search(/comment/i) !== -1) {
+                return [
+                    {
+                        name: col.name,
+                        data: processMergeColData(col.data),
+                    },
+                ]
+            }
+
+            return processMultiColData(col)
+
+        default:
+            return processMultiColData(col)
+    }
+}
+
 const processPickedColumns = (columns) => {
-    const { MERGE, MULTI, OTHER, SINGLE } = COLUMN_TYPE
+    const { MERGE, MULTI, OTHER, SINGLE, UNKNOWN } = COLUMN_TYPE
 
     const processedCol = []
 
@@ -88,6 +131,10 @@ const processPickedColumns = (columns) => {
 
             case MULTI:
                 processedCol.push(...processMultiColData(col))
+                break
+
+            case UNKNOWN:
+                processedCol.push(...processUnknownCol(col))
                 break
             default:
                 break
@@ -169,9 +216,8 @@ class QSTNorm {
         }
     }
 
-    processHeader(HEADER_SET) {
+    processHeader(HEADER_SET, option = {}) {
         const columnKeys = Object.keys(this.columns)
-        const pickedColumns = []
 
         if (columnKeys.length === 0) {
             logger(
@@ -179,6 +225,11 @@ class QSTNorm {
             )
             return
         }
+
+        const { appendUnknownColumns = false } = option
+
+        const pickedColumns = []
+        const pickedColumnsKey = {}
 
         for (let i = 0; i < HEADER_SET.length; i++) {
             const CURR_HEADER = HEADER_SET[i]
@@ -189,10 +240,25 @@ class QSTNorm {
             } = stringSimilarity.findBestMatch(lookingFor, columnKeys)
 
             if (rating > 0.7) {
+                pickedColumnsKey[bestMatchIndex] = columnKeys[bestMatchIndex]
                 pickedColumns.push({
                     ...this.columns[columnKeys[bestMatchIndex]],
                     name: CURR_HEADER.name,
                     type: CURR_HEADER.additional.type,
+                })
+            }
+        }
+
+        if (appendUnknownColumns) {
+            const unknownColumns = columnKeys.filter(
+                (_, idx) => !(idx in pickedColumnsKey)
+            )
+
+            for (const col of unknownColumns) {
+                pickedColumns.push({
+                    ...this.columns[col],
+                    name: col,
+                    type: COLUMN_TYPE.UNKNOWN,
                 })
             }
         }

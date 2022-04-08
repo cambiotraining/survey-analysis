@@ -25,24 +25,25 @@ const processSingleFile = (filePath) => {
 
     qstNorm.prepareColumns()
 
-    const { headers: fullHeader, rows: fullRows } = qstNorm.processHeader([
-        ...COMMON_HEADERS,
-        ...IDENTIFIERS_COLUMNS,
-        ...OTHER_HEADERS,
-        ...ADDITIONAL_HEADERS,
-    ])
+    const { headers: fullHeader, rows: fullRows } = qstNorm.processHeader(
+        [
+            ...COMMON_HEADERS,
+            ...IDENTIFIERS_COLUMNS,
+            ...OTHER_HEADERS,
+            ...ADDITIONAL_HEADERS,
+        ],
+        { appendUnknownColumns: true }
+    )
 
     const { headers: outHeader, rows: outRows } = qstNorm.processHeader([
         ...OTHER_HEADERS,
         ...IDENTIFIERS_COLUMNS,
-        ...ADDITIONAL_HEADERS,
     ])
 
-    const { headers: extraHeader, rows: extraRows } = qstNorm.processHeader([
-        ...COMMON_HEADERS,
-        ...IDENTIFIERS_COLUMNS,
-        ...ADDITIONAL_HEADERS,
-    ])
+    const { headers: extraHeader, rows: extraRows } = qstNorm.processHeader(
+        [...COMMON_HEADERS, ...IDENTIFIERS_COLUMNS, ...ADDITIONAL_HEADERS],
+        { appendUnknownColumns: true }
+    )
 
     const full = unparseCSV(fullHeader, fullRows)
     const out = unparseCSV(outHeader, outRows)
