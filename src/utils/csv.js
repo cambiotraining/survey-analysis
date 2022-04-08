@@ -9,7 +9,7 @@ const sanitize = (text) => {
     return text
         .replaceAll('/', '')
         .replace(/\s\s+/g, ' ')
-        .replace(/[^a-z0-9?/\s]/gi, '')
+        .replace(/[^a-z0-9@_.-?/\s]/gi, '')
 }
 
 const parseCSV = (filePath) => {
