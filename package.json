@@ -2,7 +2,7 @@
     "name": "survey-analysis",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "./src/index.js",
     "scripts": {
         "format:check": "prettier --check .",
         "format:write": "prettier --write .",
@@ -10,7 +10,7 @@
         "lint:fix": "eslint --fix ."
     },
     "bin": {
-        "sa": "./src/index.js"
+        "sat": "./src/index.js"
     },
     "repository": {
         "type": "git",

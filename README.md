@@ -37,5 +37,5 @@ npm i -g
 To run cli:
 
 ```bash
-sa help
+sat help
 ```

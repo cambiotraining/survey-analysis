@@ -10,8 +10,8 @@ const view = require('./commands/view')
 const program = new Command()
 
 program
-    .name('sa')
-    .description('sa is short for survey analysis')
+    .name('sat')
+    .description('sat is short for survey analysis tool')
     .version('1.0.0')
 
 program
