@@ -11,7 +11,7 @@ const dropEmptyColumns = (header, rows) => {
     for (let i = 0; i < rows[0].length; i++) {
         let isEmpty = true
         for (let j = 0; j < rows.length; j++) {
-            if (rows[j][i] !== '') {
+            if (rows[j][i] !== NaN && rows[j][i] !== '') {
                 isEmpty = false
                 break
             }
@@ -38,11 +38,31 @@ const dropEmptyColumns = (header, rows) => {
  */
 const dropEmptyRows = (rows) => {
     return {
-        rows: rows.filter((row) => row.join('') !== ''),
+        rows: rows.filter((row) => row.join('').replace(/NaN/g, '') !== ''),
+    }
+}
+
+/**
+ *
+ * @param {string[][]} rows rows
+ * @param {string | number} value value to fill
+ * @returns {{rows: string[][]}} processed rows
+ */
+const fillNaN = (rows, value = '') => {
+    return {
+        rows: rows.map((row) =>
+            row.map((c) => {
+                if (Number.isNaN(c)) {
+                    return value
+                }
+                return c
+            })
+        ),
     }
 }
 
 module.exports = {
     dropEmptyColumns,
     dropEmptyRows,
+    fillNaN,
 }

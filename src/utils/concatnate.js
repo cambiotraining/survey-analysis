@@ -23,7 +23,6 @@ const buildDataFrameFromCSVFilePath = (filePath, option) => {
     const columns = Object.keys(parseData.data[0])
 
     if (option.addMetaData) {
-        console.log('Adding meta data')
         columns.push('Meta Data')
 
         const meta = JSON.stringify({
