@@ -14,12 +14,25 @@ const { fillNaN } = require('../utils/df')
  * @returns {string} date
  */
 const getDate = (data) => {
-    let match = data.match(/\d+\s*-\s*\d+\s*[a-zA-Z]*\s*\d{4}/i)
+    // Multiple date
+    let match = data.match(/[\d+\s*]{5,}[a-zA-Z]*\s*\d{4}/i)
+
+    if (match) {
+        return match[0]
+    }
+
+    match = data.match(/\d+\s*-\s*\d+\s*[a-zA-Z]*\s*\d{4}/i)
     if (match) {
         return match[0]
     }
     // Might have only one date
     match = data.match(/\d+\s*\s*[a-zA-Z]*\s*\d{4}/i)
+    if (match) {
+        return match[0]
+    }
+
+    // Without year
+    match = data.match(/\d+\s*-\s*\d+\s*[a-zA-Z]*/i)
     if (match) {
         return match[0]
     }
@@ -34,7 +47,7 @@ const getDate = (data) => {
 const getCustomColData = (row) => {
     const meta = JSON.parse(row[2])
     const date = getDate(meta.fileName)
-    const name = meta.fileName.split(date)[0] ?? ''
+    const name = date ? meta.fileName.split(date)[0] ?? '' : meta.fileName
     return [date, name.trim(), '', '', '', '']
 }
 
