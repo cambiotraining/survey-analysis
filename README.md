@@ -89,6 +89,12 @@ sat process -f "*.csv" -o "output_dir"
 
  1. `-o` is to set the output directory. All the processed files will be put into this folder. Make sure the output directory exists otherwise you will get an error.
 
+ To know other options run:
+
+ ```bash
+ sat process --help
+ ```
+
  ### View csv file
 
  View only processed CSV files. It will not be helpful if you try to view raw survey data. To view the processed CSV file, run the following command:
@@ -111,3 +117,10 @@ sat cat -f "*.FULL.csv" -o "processed/ALL_FULL.csv"
  1. `-f` is to specify the input files path pattern. It can be a glob pattern (learn more about glob patterns here: https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) or a simple string.
 
  1. `-o` is to set the output file name.
+
+ 
+ To know other options run:
+
+ ```bash
+ sat cat --help
+ ```
