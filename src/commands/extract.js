@@ -46,9 +46,13 @@ const getDate = (data) => {
  */
 const getCustomColData = (row) => {
     const meta = JSON.parse(row[2])
-    const date = getDate(meta.fileName)
-    const name = date ? meta.fileName.split(date)[0] ?? '' : meta.fileName
-    return [date, name.trim(), '', '', '', '']
+    if (typeof meta === 'object' && typeof meta.fileName === 'string') {
+        const date = getDate(meta.fileName)
+        const name = date ? meta.fileName.split(date)[0] ?? '' : meta.fileName
+        return [date, name.trim(), '', '', '', '']
+    }
+
+    return ['', '', '', '', '', '']
 }
 
 /**
@@ -111,7 +115,8 @@ const extractContact = (args) => {
 
         row.push(r[1]) // Email Address
 
-        const [firstName, ...lastName] = r[0] ? r[0].split(' ') : ''.split('')
+        const [firstName, ...lastName] =
+            typeof r[0] === 'string' ? r[0].split(' ') : ['', '']
         row.push(firstName ?? '') // First Name
         row.push(lastName.join(' ')) // Last Name
 
