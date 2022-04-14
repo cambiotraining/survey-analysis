@@ -95,8 +95,19 @@ sat process -f "*.csv" -o "output_dir"
 ```bash
 sat view -f "name_of_my_csv_file.csv"
 ```
-This command prints the content of the CSV file in tabular form. It prints a maximum of 10 rows and a few columns. There are a couple of useful options to view run:
+This command prints the content of the CSV file in tabular form. It prints a maximum of 10 rows and a few columns. There are a couple of useful options, run:
 
 ```bash
 sat view --help
 ```
+
+### Combine multiple csv files
+Only combines processed CSV files. It concatenates multiple CSV files along the row axis. To combine run:
+
+```bash
+sat cat -f "*.FULL.csv" -o "processed/ALL_FULL.csv"
+```
+
+ 1. `-f` is to specify the input files path pattern. It can be a glob pattern (learn more about glob patterns here: https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) or a simple string.
+
+ 1. `-o` is to set the output file name.
