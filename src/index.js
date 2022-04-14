@@ -69,4 +69,6 @@ This function is under constructions.
     .option('-o, --output <output file name>', 'Output file name.')
     .action(extract)
 
+program.showSuggestionAfterError()
+program.showHelpAfterError('(add --help for additional information)')
 program.parse()
