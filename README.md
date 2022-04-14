@@ -31,7 +31,7 @@ npm i
 To install cli:
 
 ```bash
-npm i -g
+sudo npm i -g
 ```
 
 To run cli:
@@ -63,7 +63,7 @@ npm i
 
 Install the cli:
 ```
-npm i -g
+sudo npm i -g
 ```
 
 This will install the cli tool into your local machine. You can verify the installation by running the following command:
