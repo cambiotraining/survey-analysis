@@ -15,7 +15,7 @@ const path = require('path')
  * @param {CatOptions} option Cat options
  * @returns {dfd.DataFrame} danfo DataFrame
  */
-const buildDataFrameFromCSVFilePath = (filePath, option) => {
+const buildDataFrameFromCSVFilePath = (filePath, option = {}) => {
     const rawData = fs.readFileSync(filePath, { encoding: 'utf8' })
     const parseData = Papa.parse(rawData, { header: true })
     const rows = parseData.data.map((data) => Object.values(data))
@@ -45,7 +45,7 @@ const buildDataFrameFromCSVFilePath = (filePath, option) => {
  * @param {CatOptions} options cat option
  * @returns {dfd.DataFrame} danfo DataFrame
  */
-const catUsingFileList = (fileList, options) => {
+const catUsingFileList = (fileList, options = {}) => {
     const dfList = []
 
     for (const file of fileList) {
