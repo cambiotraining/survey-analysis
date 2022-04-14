@@ -83,7 +83,7 @@ You can process a single or multiple files using this command. To process raw su
 ```bash
 sat process -f "*.csv" -o "output_dir"
 ```
- Few point you need to keep in mind:
+ Few points you need to keep in mind:
 
  1. `-f` is to specify the input files path pattern. It can be a glob pattern (learn more about glob patterns here: https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) or a simple string.
 
