@@ -59,11 +59,7 @@ Run this after processing raw data.`
 
 program
     .command('extract')
-    .description(
-        `To extract information from processed survey data
-This function is under constructions.    
-`
-    )
+    .description(`To extract information from processed survey data.`)
     .argument('<extract-type>', 'Currently, contact is supported')
     .option('-f, --files <pattern>', 'Path of csv files')
     .option('-o, --output <output file name>', 'Output file name.')

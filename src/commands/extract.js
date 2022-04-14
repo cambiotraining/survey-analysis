@@ -182,7 +182,11 @@ const extract = (extractType, other) => {
             })
             break
         default:
-            logger(chalk.bold.red('Error: This tool can only extract contact.'))
+            logger(
+                chalk.bold.red(
+                    'Error: This tool can only extract contact details.'
+                )
+            )
     }
 }
 
