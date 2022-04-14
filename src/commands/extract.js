@@ -111,7 +111,7 @@ const extractContact = (args) => {
 
         row.push(r[1]) // Email Address
 
-        const [firstName, ...lastName] = r[0].split(' ')
+        const [firstName, ...lastName] = r[0] ? r[0].split(' ') : ''.split('')
         row.push(firstName ?? '') // First Name
         row.push(lastName.join(' ')) // Last Name
 
