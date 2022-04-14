@@ -41,7 +41,7 @@ sat help
 ```
 
 ## How to?
-### Install cli tool
+### Install this cli tool
 
 First you need to clone this repository, run the following command:
 
