@@ -78,7 +78,7 @@ If the above command prints the help, means `sat` is installed. You can use this
 
 It is the first you should do with raw data. Raw survey data comes in all forms. The intention of having a processing step is to prepare a uniform output that can be recognised by downstream processes.
 
-To process raw survey data run the following command:
+You can process a single or multiple files using this command. To process raw survey data run the following command:
 
 ```bash
 sat process -f "*.csv" -o "output_dir"
@@ -87,7 +87,7 @@ sat process -f "*.csv" -o "output_dir"
 
  1. `-f` is to specify the input files path pattern. It can be a glob pattern (learn more about glob patterns here: https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) or a simple string.
 
- 1. `-o` is to set the output directory. All the processed files will be put into this folder. Make sure the output directory exists otherwise you will get an error.
+ 1. `-o` is to set the output directory. All the processed file`s will be put into this folder. Make sure the output directory exists otherwise you will get an error.
 
  To know other options run:
 
@@ -97,7 +97,7 @@ sat process -f "*.csv" -o "output_dir"
 
  ### View csv file
 
- View only processed CSV files. It will not be helpful if you try to view raw survey data. To view the processed CSV file, run the following command:
+ View only processed CSV files. It will not be helpful if you try to view raw survey data. You can view a single CSV file at once. To view the processed CSV file, run the following command:
 ```bash
 sat view -f "name_of_my_csv_file.csv"
 ```
@@ -119,8 +119,39 @@ sat cat -f "*.FULL.csv" -o "processed/ALL_FULL.csv"
  1. `-o` is to set the output file name.
 
  
- To know other options run:
+To know other options run:
+
+```bash
+sat cat --help
+```
+
+### Extract contact details
+
+Extracts contact details from the processed CSV files. You can extract contact details from a single file or multiple files. The output CSV file has the following columns:
+
+1. Email
+1. First Name
+1. Last Name
+1. Custom 1
+1. Custom 2
+1. Custom 3
+1. Custom 4
+1. Custom 5
+1. Custom 6
+
+To extract, run the following command:
+
+```bash
+sat extract contact -f "*.FULL.csv" -o "contact.csv"
+```
+
+
+ 1. `-f` is to specify the input files path pattern. It can be a glob pattern (learn more about glob patterns here: https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) or a simple string.
+
+ 1. `-o` is to set the output file name.
+
+  To know other options run:
 
  ```bash
- sat cat --help
+ sat extract --help
  ```
